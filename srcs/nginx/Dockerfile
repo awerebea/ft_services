@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/07 21:10:35 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/10 19:22:22 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/10 21:22:27 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,12 @@ RUN	apk	add \
 		openssh \
 		openssl
 # create SSH user
-RUN	adduser -D ssh_user \
-RUN	echo "ssh_user:0000" | chpasswd
+# RUN	adduser -D ssh_user
+# RUN	echo 'ssh_user:0000' | chpasswd
+RUN			echo 'root:root' | chpasswd
+RUN			sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 # generate ssh certificate and key
-RUN	ssh-keygen -A
+RUN	/usr/bin/ssh-keygen -A
 # create the required directories
 RUN	mkdir	/run/nginx \
 			/var/run/sshd
@@ -45,6 +47,6 @@ RUN	mv /index.html /var/www/
 	# make scripts executable
 RUN	chmod +x start.sh
 	# set ports on which a container listens for connections
-EXPOSE 22 80 443
+EXPOSE 222 80 443
 	# launch server
 CMD sh start.sh

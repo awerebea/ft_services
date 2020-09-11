@@ -6,14 +6,11 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/07 21:10:35 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/11 17:42:45 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/11 17:57:28 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	alpine:latest
-COPY	nginx.conf \
-		supervisor.ini \
-		./
 RUN	apk	-U upgrade \
 &&	apk	add \
 		mysql \
@@ -28,9 +25,12 @@ RUN	apk	-U upgrade \
 		supervisor \
 		wget \
 &&	wget -c https://wordpress.org/latest.tar.gz \
-&&	tar -xvf latest.tar.gz -C /var/www \
-&&	rm -f latest.tar.gz \
-&&	mkdir	/etc/supervisor.d \
+&& 	tar -xvf latest.tar.gz -C /var/www \
+&&	rm -f latest.tar.gz
+COPY	nginx.conf \
+		supervisor.ini \
+		./
+RUN	mkdir	/etc/supervisor.d \
 			/run/nginx \
 			/var/run/php \
 &&	rm /etc/nginx/conf.d/default.conf \

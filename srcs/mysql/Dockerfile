@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/09/07 21:10:35 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/11 18:15:32 by awerebea         ###   ########.fr        #
+#    Created: 2020/09/11 18:11:10 by awerebea          #+#    #+#              #
+#    Updated: 2020/09/11 18:23:41 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,29 +16,13 @@ RUN	apk	-U upgrade \
 &&	apk	add \
 		mysql \
 		mysql-client \
-		nginx \
-		openrc \
-		php7 \
-		php7-fpm \
-		php7-json \
-		php7-mysqli \
-		supervisor \
-		wget \
-&&	wget -c https://wordpress.org/latest.tar.gz \
-&&	tar -xvf latest.tar.gz -C /var/www \
-&&	rm -f latest.tar.gz
+		openrc
 
-COPY	nginx.conf \
-		supervisor.ini \
-		./
+COPY	mysql.conf /etc/mysql/
 
-RUN	mkdir	/etc/supervisor.d \
-			/run/nginx \
-			/var/run/php \
-&&	rm /etc/nginx/conf.d/default.conf \
-&&	mv /nginx.conf /etc/nginx/conf.d/ \
-&&	mv /supervisor.ini /etc/supervisor.d/
+VOLUME	["sys/fs/cgroup"]
+VOLUME	["/var/lib/mysql"]
 
-EXPOSE 5050
+EXPOSE 3306
 
-ENTRYPOINT	/usr/bin/supervisord
+ENTRYPOINT	rc default && /etc/init.d/mariadb setup && /usr/bin/mysqld_safe

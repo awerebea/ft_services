@@ -13,18 +13,21 @@ if [ "$prog_missing" -eq "1" ]; then
 	exit 1
 fi
 
-# build Docker images
-# images=(ftps grafana influxdb mysql nginx phpMyAdmin telegraf wordpress)
-# for image in ftps grafana influxdb mysql nginx phpMyAdmin telegraf wordpress
-# for image in "${images[@]}"
-# for image in nginx
-# do
-#     echo $image
-#     docker build -t $image ./srcs/$image
-# done
-
 # start minikube
-# minikube start --vm-driver=virtualbox \
-	# --cpus 2 --disk-size=2048mb --memory=2048mb
-# minikube addons enable metallb
+minikube start	--vm-driver=virtualbox \
+				--cpus 2 --disk-size=5000mb --memory=2048mb
+minikube addons enable metallb
 # minikube addons enable metrics-server
+eval $(minikube docker-env) > /dev/null
+
+# load Kubernetes Balancer and data storage volumes
+kubectl apply -f srcs/balancer.yaml
+kubectl apply -f srcs/volumes.yaml
+
+# build Docker images and launch them in Kubernetes
+services=(nginx wordpress mysql)
+for service in "${services[@]}"
+do
+	docker build -t $service:ft_services ./srcs/$service > /dev/null
+	kubectl apply -f srcs/$service.yaml
+done

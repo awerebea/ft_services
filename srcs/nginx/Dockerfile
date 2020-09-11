@@ -6,11 +6,12 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/07 21:10:35 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/11 17:53:58 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/11 18:16:22 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	alpine:latest
+
 RUN	apk	-U upgrade \
 &&	apk	add \
 		nginx \
@@ -19,10 +20,12 @@ RUN	apk	-U upgrade \
 		openssl \
 		sudo \
 		supervisor
+
 COPY	index.html \
 		nginx.conf \
 		supervisor.ini \
 		./
+
 RUN	mkdir	/run/nginx \
 			/var/run/sshd \
 			/etc/supervisor.d \
@@ -38,5 +41,7 @@ RUN	mkdir	/run/nginx \
 &&	mv /nginx.conf /etc/nginx/conf.d/ \
 &&	mv /index.html /var/www/ \
 &&	mv /supervisor.ini /etc/supervisor.d/
+
 EXPOSE 22 80 443
+
 ENTRYPOINT	/usr/bin/supervisord

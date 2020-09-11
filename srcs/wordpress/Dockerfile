@@ -6,37 +6,35 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/07 21:10:35 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/11 17:37:51 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/11 17:42:45 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	alpine:latest
-COPY	index.html \
-		nginx.conf \
+COPY	nginx.conf \
 		supervisor.ini \
 		./
 RUN	apk	-U upgrade \
 &&	apk	add \
+		mysql \
+		mysql-client \
+		mysql-client \
 		nginx \
 		openrc \
-		openssh \
-		openssl \
-		sudo \
+		php7 \
+		php7-fpm \
+		php7-json \
+		php7-mysqli \
 		supervisor \
-&&	adduser -D user \
-&&	echo 'user:1234' | chpasswd \
-&&	addgroup user wheel \
-&&	echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel \
-&&	/usr/bin/ssh-keygen -A \
-&&	mkdir	/run/nginx \
-			/var/run/sshd \
-			/etc/supervisor.d \
-&&	openssl req -newkey rsa:2048 -x509 -sha256 -days 30 -nodes \
-	-out /etc/ssl/private/www.crt -keyout /etc/ssl/private/www.key \
-	-subj "/C=RU/ST=Tatarstan/L=Kazan/O=School 21/OU=awerebea/CN=ft_services" \
+		wget \
+&&	wget -c https://wordpress.org/latest.tar.gz \
+&&	tar -xvf latest.tar.gz -C /var/www \
+&&	rm -f latest.tar.gz \
+&&	mkdir	/etc/supervisor.d \
+			/run/nginx \
+			/var/run/php \
 &&	rm /etc/nginx/conf.d/default.conf \
 &&	mv /nginx.conf /etc/nginx/conf.d/ \
-&&	mv /index.html /var/www/ \
 &&	mv /supervisor.ini /etc/supervisor.d/
-EXPOSE 22 80 443
+EXPOSE 5050
 ENTRYPOINT	/usr/bin/supervisord

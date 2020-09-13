@@ -29,7 +29,7 @@ printf "\e[1;34mPersistent volumes\e[0m \e[1;32mcreated\e[0m\n"
 # build Docker images and launch them in Kubernetes
 for service in nginx wordpress mysql
 do
-	docker build -t ${service}_img ./srcs/$service > /dev/null
+	docker build -t ${service}_alpine ./srcs/$service > /dev/null
 	kubectl apply -f srcs/$service.yaml > /dev/null
 	printf "\e[1;34m$service\e[0m \e[1;32mstarted\e[0m\n"
 done

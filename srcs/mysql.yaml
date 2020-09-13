@@ -31,7 +31,7 @@ spec:
           claimName: mysql-claim
       containers:
       - name: mysql
-        image: mysql_img
+        image: mysql_alpine
         imagePullPolicy: Never
         ports:
         - containerPort: 3306

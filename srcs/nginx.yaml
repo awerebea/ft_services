@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx_img
+        image: nginx_alpine
         imagePullPolicy: Never
         ports:
         - containerPort: 22

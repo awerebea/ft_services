@@ -6,28 +6,27 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/07 21:10:35 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/13 17:30:08 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/14 01:10:33 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	alpine:latest
-
-# RUN	apk	-U upgrade \
-# &&	apk	add \
-RUN		apk	add \
-		nginx \
-		openrc \
-		openssh \
-		openssl \
-		sudo \
-		supervisor
 
 COPY	index.html \
 		nginx.conf \
 		supervisor.ini \
 		./
 
-RUN	mkdir	/run/nginx \
+# RUN	apk	-U upgrade \
+# &&	apk	add \
+RUN	apk	add \
+			nginx \
+			openrc \
+			openssh \
+			openssl \
+			sudo \
+			supervisor \
+&&	mkdir	/run/nginx \
 			/var/run/sshd \
 			/etc/supervisor.d \
 &&	adduser -D user \
@@ -43,6 +42,6 @@ RUN	mkdir	/run/nginx \
 &&	mv /index.html /var/www/ \
 &&	mv /supervisor.ini /etc/supervisor.d/
 
-EXPOSE 22 80 443
+EXPOSE	22 80 443
 
 ENTRYPOINT	/usr/bin/supervisord

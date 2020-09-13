@@ -21,15 +21,21 @@ minikube addons enable metallb
 eval $(minikube docker-env) > /dev/null
 
 # load Kubernetes Balancer and data storage volumes
-kubectl apply -f srcs/balancer.yaml > /dev/null
-printf "\e[1;34mBalancer\e[0m \e[1;32mconfigured\e[0m\n"
+kubectl apply -f srcs/load_balancer.yaml > /dev/null
+printf "\e[1;34mLoad Balancer\e[0m \e[1;32mconfigured\e[0m\n"
 kubectl apply -f srcs/volumes.yaml > /dev/null
 printf "\e[1;34mPersistent volumes\e[0m \e[1;32mcreated\e[0m\n"
 
 # build Docker images and launch them in Kubernetes
-for service in nginx wordpress mysql
+for service in wordpress mysql phpmyadmin
 do
 	docker build -t ${service}_alpine ./srcs/$service > /dev/null
 	kubectl apply -f srcs/$service.yaml > /dev/null
 	printf "\e[1;34m$service\e[0m \e[1;32mstarted\e[0m\n"
 done
+
+# info
+printf "\e[1;35mNGINX\e[0m:\t\t\thttp://192.168.99.1\n"
+printf "\e[1;35mWordPress\e[0m (\e[1;32msite\e[0m):\thttp://192.168.99.2:5050\n"
+printf "\e[1;35mWordPress\e[0m (\e[1;31mwp-admin\e[0m):\thttp://192.168.99.2:5050/wp-admin\t(login: \e[1;34madmin\e[0m password: \e[1;34madmin\e[0m)\n"
+printf "\e[1;35mphpMyAdmin:\e[0m:\t\thttp://192.168.99.3:5000\t\t(login: \e[1;34madmin\e[0m password: \e[1;34madmin\e[0m)\n"

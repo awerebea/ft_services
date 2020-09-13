@@ -6,14 +6,15 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/07 21:10:35 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/11 18:15:32 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/13 17:30:38 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	alpine:latest
 
-RUN	apk	-U upgrade \
-&&	apk	add \
+# RUN	apk	-U upgrade \
+# &&	apk	add \
+RUN		apk	add \
 		mysql \
 		mysql-client \
 		nginx \

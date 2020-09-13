@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 # сhecking if Docker and Minikube are installed
 prog_missing=0
@@ -21,13 +21,15 @@ minikube addons enable metallb
 eval $(minikube docker-env) > /dev/null
 
 # load Kubernetes Balancer and data storage volumes
-kubectl apply -f srcs/balancer.yaml
-kubectl apply -f srcs/volumes.yaml
+kubectl apply -f srcs/balancer.yaml > /dev/null
+printf "\e[1;34mBalancer\e[0m \e[1;32mconfigured\e[0m\n"
+kubectl apply -f srcs/volumes.yaml > /dev/null
+printf "\e[1;34mPersistent volumes\e[0m \e[1;32mcreated\e[0m\n"
 
 # build Docker images and launch them in Kubernetes
-services=(nginx wordpress mysql)
-for service in "${services[@]}"
+for service in nginx wordpress mysql
 do
-	docker build -t $service:ft_services ./srcs/$service > /dev/null
-	kubectl apply -f srcs/$service.yaml
+	docker build -t ${service}_img ./srcs/$service > /dev/null
+	kubectl apply -f srcs/$service.yaml > /dev/null
+	printf "\e[1;34m$service\e[0m \e[1;32mstarted\e[0m\n"
 done

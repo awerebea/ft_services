@@ -18,6 +18,8 @@ spec:
   selector:
     matchLabels:
       app: mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -29,7 +31,7 @@ spec:
           claimName: mysql-claim
       containers:
       - name: mysql
-        image: mysql:ft_services
+        image: mysql_img
         imagePullPolicy: Never
         ports:
         - containerPort: 3306

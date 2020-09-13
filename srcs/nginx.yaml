@@ -6,6 +6,8 @@ spec:
   selector:
     matchLabels:
       app: nginx
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -13,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:ft_services
+        image: nginx_img
         imagePullPolicy: Never
         ports:
         - containerPort: 22

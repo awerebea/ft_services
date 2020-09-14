@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/13 23:16:01 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/14 02:45:26 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/14 11:40:21 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,8 @@ RUN	apk	add \
 &&	wget -c \
 		https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-english.tar.xz \
 &&	mkdir /var/www/phpmyadmin /var/www/phpmyadmin/tmp \
+&&	sudo chown daemon /var/www/phpmyadmin/tmp \
+&&	sudo chmod 775 /var/www/phpmyadmin/tmp \
 &&	tar -xvf phpMyAdmin-latest-english.tar.xz --strip-components 1 -C \
 		/var/www/phpmyadmin \
 &&	rm -f /phpMyAdmin-latest-english.tar.xz /etc/nginx/conf.d/default.conf \

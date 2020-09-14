@@ -23,14 +23,14 @@ eval $(minikube docker-env) > /dev/null
 # load Kubernetes Balancer and data storage volumes
 kubectl apply -f srcs/load_balancer.yaml > /dev/null
 printf "\e[1;34mLoad Balancer\e[0m \e[1;32mconfigured\e[0m\n"
-kubectl apply -f srcs/volumes.yaml > /dev/null
+kubectl apply -f srcs/persistent_volumes.yaml> /dev/null
 printf "\e[1;34mPersistent volumes\e[0m \e[1;32mcreated\e[0m\n"
 
 # build Docker images and launch them in Kubernetes
-for service in wordpress mysql phpmyadmin
+for service in nginx wordpress mysql phpmyadmin
 do
 	docker build -t ${service}_alpine ./srcs/$service > /dev/null
-	kubectl apply -f srcs/$service.yaml > /dev/null
+	kubectl apply -f srcs/$service/$service.yaml > /dev/null
 	printf "\e[1;34m$service\e[0m \e[1;32mstarted\e[0m\n"
 done
 

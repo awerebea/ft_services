@@ -13,7 +13,7 @@ spec:
   selector:
     app: phpmyadmin
   type: LoadBalancer
-  loadBalancerIP: 192.168.99.3
+  loadBalancerIP: 192.168.99.30
 ---
 apiVersion: apps/v1
 kind: Deployment

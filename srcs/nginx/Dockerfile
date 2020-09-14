@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/07 21:10:35 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/14 01:10:33 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/14 16:08:24 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,8 @@ FROM	alpine:latest
 COPY	index.html \
 		nginx.conf \
 		supervisor.ini \
-		./
+		/
 
-# RUN	apk	-U upgrade \
-# &&	apk	add \
 RUN	apk	add \
 			nginx \
 			openrc \

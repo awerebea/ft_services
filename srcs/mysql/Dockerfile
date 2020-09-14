@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/11 18:11:10 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/14 02:26:44 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/14 16:08:15 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,20 +15,17 @@ FROM	alpine:latest
 COPY	my.cnf \
 		startup.sh \
 		wordpress.sql \
-		./
+		/
 
-# RUN	apk	-U upgrade \
-# &&	apk	add \
 RUN	apk	add \
 		mysql \
 		mysql-client \
 		openrc \
-&&	mv ./my.cnf /etc/mysql/ \
-&&	chmod +x ./startup.sh
+&&	mv /my.cnf /etc/mysql/ \
+&&	chmod +x /startup.sh
 
-# VOLUME	["sys/fs/cgroup"]
-VOLUME	["/var/lib/mysql"]
+VOLUME	/var/lib/mysql
 
 EXPOSE	3306
 
-ENTRYPOINT	./startup.sh
+ENTRYPOINT	/startup.sh

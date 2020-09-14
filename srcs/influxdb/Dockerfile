@@ -5,28 +5,39 @@
 #                                                     +:+ +:+         +:+      #
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/09/14 19:34:21 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/14 22:05:08 by awerebea         ###   ########.fr        #
+#    Created: 2020/09/14 16:45:33 by awerebea          #+#    #+#              #
+#    Updated: 2020/09/14 19:57:18 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	alpine:latest
 
+COPY	supervisor.ini /
+
 RUN	apk	add \
 		ca-certificates \
+		supervisor \
 &&	wget -q -O /etc/apk/keys/sgerrand.rsa.pub \
 			https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub \
 &&	wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/\
 2.32-r0/glibc-2.32-r0.apk \
 &&	apk add glibc-2.32-r0.apk \
-&&	wget https://dl.grafana.com/oss/release/grafana-7.1.5.linux-amd64.tar.gz \
-&&	tar -zxvf grafana-7.1.5.linux-amd64.tar.gz \
-&&	rm -rf grafana-7.1.5.linux-amd64.tar.gz
+&&	wget https://dl.influxdata.com/influxdb/releases/\
+influxdb-1.8.2-static_linux_amd64.tar.gz \
+&&	mkdir	/etc/supervisor.d \
+			/var/lib/influxdb \
+&&	tar xvfz influxdb-1.8.2-static_linux_amd64.tar.gz \
+&&	mv /influxdb-1.8.2-1/* /var/lib/influxdb/ \
+&&	rm -rf /influxdb-1.8.2-1/ influxdb-1.8.2-static_linux_amd64.tar.gz \
+&&	wget https://dl.influxdata.com/telegraf/releases/\
+telegraf-1.15.3_linux_amd64.tar.gz \
+&&	tar xf telegraf-1.15.3_linux_amd64.tar.gz \
+&&	cp -r /telegraf-1.15.3/* / \
+&&	rm -rf /telegraf-1.15.3/ telegraf-1.15.3_linux_amd64.tar.gz \
+&&	./usr/bin/telegraf -sample-config --input-filter docker \
+						--output-filter influxdb > /var/lib/influxdb/telegraf.conf \
+&&	mv /supervisor.ini /etc/supervisor.d/
 
-COPY	grafana.db /grafana-7.1.5/data/
+VOLUME	/var/lib
 
-EXPOSE	3000
-
-WORKDIR	/grafana-7.1.5/bin/
-
-ENTRYPOINT	./grafana-server
+ENTRYPOINT	/usr/bin/supervisord

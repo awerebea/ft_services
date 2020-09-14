@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/07 21:10:35 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/14 16:08:45 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/14 19:58:08 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ RUN	apk	add \
 		php7-json \
 		php7-mysqli \
 		supervisor \
-		wget \
 &&	wget -c https://wordpress.org/latest.tar.gz \
 &&	tar -xvf latest.tar.gz -C /var/www \
 &&	rm -f latest.tar.gz \

@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/13 23:16:01 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/14 16:08:36 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/14 19:57:56 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ RUN	apk	add \
 		php7-phar \
 		php7-session \
 		supervisor \
-		wget \
 &&	rc-update add php-fpm7 default \
 &&	wget -c \
 		https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-english.tar.xz \

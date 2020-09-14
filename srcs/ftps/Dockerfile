@@ -5,35 +5,31 @@
 #                                                     +:+ +:+         +:+      #
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/09/10 12:32:04 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/10 12:57:01 by awerebea         ###   ########.fr        #
+#    Created: 2020/09/14 20:48:14 by awerebea          #+#    #+#              #
+#    Updated: 2020/09/14 22:51:59 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-	# build system core from selected image
-FROM alpine:latest
-	# copy config files from host machine to server
-COPY vsftpd.conf \
-	start.sh ./
-	# set environment variables
-ENV	API_URL=https://kubernetes
-	# update & upgrade core system
-RUN	apk -U upgrade \
-	# install requered components
-&&	apk add openssl \
+FROM	alpine:latest
+
+COPY	vsftpd.conf /etc/vsftpd/
+
+RUN	apk	add \
+		openrc \
+		openssl \
 		vsftpd \
-		jq \
-		curl \
-	# generate ssl certificate and key
+&&	mkdir /var/log/ftp \
+&&	touch /var/log/ftp/xferlog \
+&&	rc default \
+&&	adduser -D user \
+&&	echo 'user:user' | chpasswd \
 &&	openssl req -newkey rsa:2048 -x509 -sha256 -days 30 -nodes \
-	-subj "/C=RU/ST=Tatarstan/L=Kazan/O=School 21/OU=awerebea/CN=ft_server" \
-	-out /etc/ssl/private/sftp.crt -keyout /etc/ssl/private/sftp.key \
-	# make requered directories
-&& mkdir -p /var/ftp \
-			/peer \
-	# move config-files
-&& mv vsftpd.conf /etc/vsftpd/
-	# set ports on which a container listens for connections
-EXPOSE 20 21 30000
-	# launch server
-CMD bash start.sh
+	-out /etc/vsftpd/ftps.crt -keyout /etc/vsftpd/ftps.key \
+	-subj "/C=RU/ST=Tatarstan/L=Kazan/O=School 21/OU=awerebea/\
+emailAddress=awerebea@student.21-school.ru/CN=ft_services"
+
+VOLUME	/home/user
+
+EXPOSE	21 21021
+
+ENTRYPOINT	vsftpd /etc/vsftpd/vsftpd.conf

@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/14 19:34:21 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/14 22:05:08 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/15 00:38:21 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ RUN	apk	add \
 &&	tar -zxvf grafana-7.1.5.linux-amd64.tar.gz \
 &&	rm -rf grafana-7.1.5.linux-amd64.tar.gz
 
-COPY	grafana.db /grafana-7.1.5/data/
+# COPY	grafana.db /grafana-7.1.5/data/
 
 EXPOSE	3000
 

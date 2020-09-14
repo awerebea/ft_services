@@ -69,7 +69,7 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 21
-        - containerPort: 10100
+        - containerPort: 21021
         volumeMounts:
         - name: ftps-persistent-storage
           mountPath: /home/user

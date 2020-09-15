@@ -14,20 +14,6 @@ spec:
     app: influxdb
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: influxdb-persistent-storage
-  labels:
-    type: local
-spec:
-  capacity:
-    storage: 500Mi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /mnt/influxdb
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: influxdb-pv-claim

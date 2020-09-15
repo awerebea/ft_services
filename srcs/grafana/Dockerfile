@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/14 19:34:21 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/15 00:38:21 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/15 18:11:58 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,13 @@ RUN	apk	add \
 &&	apk add glibc-2.32-r0.apk \
 &&	wget https://dl.grafana.com/oss/release/grafana-7.1.5.linux-amd64.tar.gz \
 &&	tar -zxvf grafana-7.1.5.linux-amd64.tar.gz \
-&&	rm -rf grafana-7.1.5.linux-amd64.tar.gz
+&&	rm -rf grafana-7.1.5.linux-amd64.tar.gz \
+&&	mv /grafana-7.1.5 /grafana
 
-# COPY	grafana.db /grafana-7.1.5/data/
+COPY	grafana.db /grafana/data/
 
 EXPOSE	3000
 
-WORKDIR	/grafana-7.1.5/bin/
+WORKDIR	/grafana/bin/
 
 ENTRYPOINT	./grafana-server

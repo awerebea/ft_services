@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/14 16:45:33 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/15 02:06:25 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/15 21:05:11 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ telegraf-1.15.3_linux_amd64.tar.gz \
 &&	cp -r /telegraf-1.15.3/* / \
 &&	rm -rf /telegraf-1.15.3/ telegraf-1.15.3_linux_amd64.tar.gz \
 &&	./usr/bin/telegraf -sample-config --input-filter docker \
-						--output-filter influxdb > /etc/telegraf/telegraf.d/telegraf.conf \
+						--output-filter influxdb > /etc/telegraf/telegraf.conf \
 &&	mv /supervisor.ini /etc/supervisor.d/
 
 VOLUME	/var/lib/influxdb

@@ -6,11 +6,11 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/14 20:48:14 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/15 21:06:21 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/16 12:12:19 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	alpine:latest
+FROM	alpine:3.7
 
 COPY	vsftpd.conf /etc/vsftpd/
 
@@ -30,6 +30,6 @@ emailAddress=awerebea@student.21-school.ru/CN=ft_services"
 
 VOLUME	/home/user
 
-EXPOSE	21 21021
+EXPOSE	21
 
 ENTRYPOINT	vsftpd /etc/vsftpd/vsftpd.conf

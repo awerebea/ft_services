@@ -21,7 +21,6 @@ minikube start	--vm-driver=virtualbox \
 				--cpus 2 --memory=2048mb --disk-size=5000mb
 minikube addons enable metallb
 minikube addons enable metrics-server
-# minikube addons enable dashboard
 eval $(minikube docker-env) >/dev/null 2>error.log
 
 # load Kubernetes Balancer and data storage volumes
@@ -44,6 +43,11 @@ do
 		printf "\e[1;31m%s\e[0m\n" "error"
 	fi
 done
+
+# remove error log in no error occurred
+if [ ! -s error.log ] ; then
+  rm error.log
+fi
 
 # info
 printf "\n"

@@ -5,7 +5,7 @@ rm -f error.log
 
 # сhecking if Docker and Minikube are installed
 prog_missing=0
-for prog in docker minikube
+for prog in docker minikube virtualbox
 do
 if !(which $prog) >/dev/null 2>&1; then
 	echo Need to install: $prog
@@ -28,7 +28,8 @@ kubectl apply -f srcs/load_balancer.yaml >/dev/null 2>error.log
 kubectl apply -f srcs/persistent_volumes.yaml >/dev/null 2>error.log
 
 # build Docker images and launch them in Kubernetes
-for service in nginx wordpress mysql phpmyadmin influxdb grafana ftps
+# for service in nginx wordpress mysql phpmyadmin influxdb grafana ftps
+for service in ftps
 do
 	printf "✔   \e[1;34m%-13s\e[0m " "$service"
 	if docker build -t ${service}_alpine ./srcs/$service >/dev/null 2>error.log

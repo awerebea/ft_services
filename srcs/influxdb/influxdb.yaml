@@ -20,6 +20,10 @@ metadata:
   labels:
     app: influxdb
 spec:
+  storageClassName: influxdb-storage
+  selector:
+    matchLabels:
+      name: influxdb-storage
   accessModes:
     - ReadWriteOnce
   resources:

@@ -4,12 +4,15 @@ metadata:
   name: mysql-persistent-storage
   labels:
     type: local
+    name: mysql-storage
 spec:
+  storageClassName: mysql-storage
   capacity:
     storage: 500Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
+    type: DirectoryOrCreate
     path: /mnt/mysql
 ---
 apiVersion: v1
@@ -18,12 +21,15 @@ metadata:
   name: influxdb-persistent-storage
   labels:
     type: local
+    name: influxdb-storage
 spec:
+  storageClassName: influxdb-storage
   capacity:
     storage: 500Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
+    type: DirectoryOrCreate
     path: /mnt/influxdb
 ---
 apiVersion: v1
@@ -32,10 +38,13 @@ metadata:
   name: ftps-persistent-storage
   labels:
     type: local
+    name: ftps-storage
 spec:
+  storageClassName: ftps-storage
   capacity:
     storage: 500Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
+    type: DirectoryOrCreate
     path: /mnt/ftps

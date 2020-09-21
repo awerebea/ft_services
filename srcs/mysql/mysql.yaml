@@ -20,6 +20,10 @@ metadata:
   labels:
     app: mysql
 spec:
+  storageClassName: mysql-storage
+  selector:
+    matchLabels:
+      name: mysql-storage
   accessModes:
     - ReadWriteOnce
   resources:

@@ -26,6 +26,10 @@ metadata:
   labels:
     app: ftps
 spec:
+  storageClassName: ftps-storage
+  selector:
+    matchLabels:
+      name: ftps-storage
   accessModes:
     - ReadWriteOnce
   resources:

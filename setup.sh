@@ -28,8 +28,7 @@ kubectl apply -f srcs/load_balancer.yaml >/dev/null 2>error.log
 kubectl apply -f srcs/persistent_volumes.yaml >/dev/null 2>error.log
 
 # build Docker images and launch them in Kubernetes
-# for service in nginx wordpress mysql phpmyadmin influxdb grafana ftps
-for service in ftps
+for service in nginx wordpress mysql phpmyadmin influxdb grafana ftps
 do
 	printf "✔   \e[1;34m%-13s\e[0m " "$service"
 	if docker build -t ${service}_alpine ./srcs/$service >/dev/null 2>error.log

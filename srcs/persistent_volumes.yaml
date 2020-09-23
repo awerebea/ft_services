@@ -31,3 +31,20 @@ spec:
   hostPath:
     type: DirectoryOrCreate
     path: /mnt/influxdb
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ftps-persistent-storage
+  labels:
+    type: local
+    name: ftps-storage
+spec:
+  storageClassName: ftps-storage
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    type: DirectoryOrCreate
+    path: /mnt/ftps

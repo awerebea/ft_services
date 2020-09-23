@@ -36,5 +36,3 @@ spec:
       - image: phpmyadmin_alpine
         name: phpmyadmin
         imagePullPolicy: Never
-        ports:
-        - containerPort: 5000

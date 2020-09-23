@@ -51,8 +51,6 @@ spec:
       - image: influxdb_alpine
         name: influxdb
         imagePullPolicy: Never
-        ports:
-        - containerPort: 8086
         volumeMounts:
         - name: influxdb-persistent-storage
           mountPath: /var/lib/influxdb

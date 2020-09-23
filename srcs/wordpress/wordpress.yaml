@@ -36,5 +36,3 @@ spec:
       - image: wordpress_alpine
         name: wordpress
         imagePullPolicy: Never
-        ports:
-        - containerPort: 5050

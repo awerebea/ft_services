@@ -51,8 +51,6 @@ spec:
       - image: mysql_alpine
         name: mysql
         imagePullPolicy: Never
-        ports:
-        - containerPort: 3306
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql

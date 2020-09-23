@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/14 20:48:14 by awerebea          #+#    #+#              #
-#    Updated: 2020/09/16 18:03:17 by awerebea         ###   ########.fr        #
+#    Updated: 2020/09/23 12:05:15 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ RUN	apk	add \
 &&	rc default \
 &&	adduser -D user \
 &&	echo 'user:user' | chpasswd \
+&&	mkdir -p ftp \
 &&	openssl req -newkey rsa:2048 -x509 -sha256 -days 30 -nodes \
 	-out /etc/vsftpd/ftps.crt -keyout /etc/vsftpd/ftps.key \
 	-subj "/C=RU/ST=Tatarstan/L=Kazan/O=School 21/OU=awerebea/\
@@ -29,7 +30,7 @@ emailAddress=awerebea@student.21-school.ru/CN=ft_services"
 
 COPY	vsftpd.conf /etc/vsftpd/
 
-VOLUME	/home/user
+VOLUME	/ftp
 
 EXPOSE	21
 

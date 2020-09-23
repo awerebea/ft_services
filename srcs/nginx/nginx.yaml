@@ -44,7 +44,3 @@ spec:
       - image: nginx_alpine
         name: nginx
         imagePullPolicy: Never
-        ports:
-        - containerPort: 22
-        - containerPort: 80
-        - containerPort: 443
